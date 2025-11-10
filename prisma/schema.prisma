@@ -1,3 +1,4 @@
+// prisma/schema.prisma
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -7,18 +8,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model WaitlistEntry {
-  id        String   @id @default(uuid())
-  shop      String
-  email     String?
-  phone     String?
-  productId String
-  createdAt DateTime @default(now())
-}
-
-model Shop {
-  id        String   @id
-  domain    String   @unique
-  accessToken String
-  createdAt DateTime @default(now())
+model User {
+  id         String   @id @default(cuid())
+  email      String   @unique
+  password   String
+  name       String?
+  role       String   @default("user")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  // add billing/subscription fields later
 }
