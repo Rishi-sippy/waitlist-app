@@ -18,9 +18,9 @@ export default function Home() {
       {/* HERO */}
       <main className="max-w-5xl mx-auto text-center pt-32 pb-32 px-6 relative z-20">
         <h1 className="text-4xl sm:text-6xl font-extrabold leading-tight">
-          Drive more revenue
+          Let AI talk to your customers and
           <br />
-          with <span className="text-[#3CD5B0]">AI powered SMS</span>
+          with <span className="text-[#3CD5B0]">drive conversions 24/7</span>
         </h1>
 
         <p className="mt-6 text-lg text-gray-300 max-w-2xl mx-auto">Generate sales with SMS faster than ever. Our conversational AI turns customer chats into profitable conversions — automatically.</p>
@@ -54,7 +54,7 @@ function Navbar() {
       <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* LOGO */}
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-[#3CD5B0] rounded-lg flex justify-center items-center font-bold text-white">CS</div>
+          <div className="w-10 h-10 bg-[#3CD5B0] rounded-lg flex justify-center items-center font-bold text-white">WL</div>
           <span className="text-xl font-semibold">WAIT LIST</span>
         </div>
 
