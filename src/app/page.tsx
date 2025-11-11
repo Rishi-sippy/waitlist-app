@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import PricingPlans from '@/components/Pricing'
+import Footer from '@/components/Footer'
 
 export default function Home() {
   return (
@@ -45,6 +46,7 @@ export default function Home() {
       <div>
         <PricingPlans />
       </div>
+      <Footer />
     </div>
   )
 }
