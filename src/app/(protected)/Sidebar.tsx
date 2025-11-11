@@ -8,12 +8,14 @@ export default function Sidebar() {
 
   const menu = [
     { name: 'Dashboard', href: '/dashboard', icon: Home },
-    { name: 'Settings', href: '/settings', icon: Settings }
+    { name: 'Settings', href: '/settings', icon: Settings },
+    { name: 'Revenue', href: '/settings', icon: Settings },
+    { name: 'Campaigns', href: '/settings', icon: Settings }
   ]
 
   return (
     <aside className="h-screen w-64 bg-gray-900 text-white p-4 flex flex-col gap-4 fixed top-0 left-0">
-      <h1 className="text-xl font-bold mb-6">My Panel</h1>
+      <h1 className="text-xl font-bold text-[#3CD5B0] mb-6">My Panel</h1>
       <nav className="flex flex-col gap-2">
         {menu.map((item) => {
           const Icon = item.icon
@@ -22,11 +24,11 @@ export default function Sidebar() {
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-3 p-3 rounded-xl transition
+              className={`flex items-center text-[#3CD5B0] gap-3 p-3 rounded-xl transition
                 ${active ? 'bg-gray-700' : 'hover:bg-gray-800'}`}
             >
               <Icon size={20} />
-              <span>{item.name}</span>
+              <span className="text-[#3CD5B0]">{item.name}</span>
             </Link>
           )
         })}
