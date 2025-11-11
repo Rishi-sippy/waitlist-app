@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import PricingPlans from '@/components/Pricing'
 
 export default function Home() {
   return (
@@ -41,6 +42,9 @@ export default function Home() {
           <Badge text="$1,000 in free credits" />
         </div>
       </main>
+      <div>
+        <PricingPlans />
+      </div>
     </div>
   )
 }
