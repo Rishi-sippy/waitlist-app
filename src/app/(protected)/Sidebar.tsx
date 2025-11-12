@@ -9,8 +9,8 @@ export default function Sidebar() {
   const menu = [
     { name: 'Dashboard', href: '/dashboard', icon: Home },
     { name: 'Settings', href: '/settings', icon: Settings },
-    { name: 'Revenue', href: '/settings', icon: Settings },
-    { name: 'Campaigns', href: '/settings', icon: Settings }
+    { name: 'Revenue', href: '/', icon: Settings },
+    { name: 'Campaigns', href: '/', icon: Settings }
   ]
 
   return (
