@@ -29,7 +29,7 @@ export default function Home() {
 
         {/* CTA BUTTONS */}
         <div className="flex items-center justify-center gap-4 mt-10 flex-wrap">
-          <Link href="#" className="bg-[#3CD5B0] hover:bg-[#3CD5B0] transition px-6 py-3 rounded-xl text-lg font-semibold">
+          <Link href="/signup" className="bg-[#3CD5B0] hover:bg-[#3CD5B0] transition px-6 py-3 rounded-xl text-lg font-semibold">
             Start Free Trial
           </Link>
 
