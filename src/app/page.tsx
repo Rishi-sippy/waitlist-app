@@ -116,7 +116,7 @@ function FloatingCard({ className }: { className?: string }) {
         transform: 'rotate(-5deg)'
       }}
     >
-      <div className="w-full h-full opacity-30 bg-gradient-to-br from-[#3CD5B0] to-[#3CD5B0] rounded-xl blur-xl"></div>
+      <div className="w-full h-full opacity-30 bg-linear-to-br from-[#3CD5B0] to-[#3CD5B0] rounded-xl blur-xl"></div>
     </div>
   )
 }
