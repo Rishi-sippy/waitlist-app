@@ -1,18 +1,10 @@
-// src/app/api/auth/register/route.ts
 import { NextResponse } from 'next/server'
-import { hashPassword, generateToken } from '../../../../lib/auth'
-import { prisma } from '../../../../lib/db'
-
-type Body = {
-  email: string
-  password: string
-  name?: string
-}
+import { prisma } from '@/lib/db'
+import { hashPassword, generateToken } from '@/lib/auth'
 
 export async function POST(req: Request) {
   try {
-    const body = (await req.json()) as Body
-    const { email, password, name } = body
+    const { email, password, name } = await req.json()
 
     if (!email || !password) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
@@ -24,14 +16,27 @@ export async function POST(req: Request) {
     }
 
     const hashed = await hashPassword(password)
+
     const user = await prisma.user.create({
-      data: { email, password: hashed, name }
+      data: {
+        email,
+        password: hashed,
+        name: name || '',
+        role: 'user'
+      }
     })
 
-    const token = generateToken({ id: user.id })
+    const token = generateToken({
+      id: user.id,
+      email: user.email,
+      role: user.role
+    })
 
-    const res = NextResponse.json({ ok: true, user: { id: user.id, email: user.email, name: user.name } })
-    // Set HttpOnly cookie
+    const res = NextResponse.json({
+      ok: true,
+      user: { id: user.id, email: user.email, name: user.name }
+    })
+
     res.cookies.set({
       name: 'token',
       value: token,
@@ -39,11 +44,10 @@ export async function POST(req: Request) {
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
       path: '/'
-      // maxAge optional; depends on JWT_EXPIRES_IN
     })
 
     return res
-  } catch (err: any) {
+  } catch (err) {
     console.error('Register error:', err)
     return NextResponse.json({ error: 'Server error' }, { status: 500 })
   }
