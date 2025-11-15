@@ -17,6 +17,18 @@ model User {
   updatedAt  DateTime @updatedAt
 }
 
+model Waitlist {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String
+  phone     String?
+  productId String
+  variantId String?
+  notified  Boolean  @default(false)
+  notifiedAt DateTime?
+  createdAt DateTime @default(now())
+}
+
 model WaitlistEntry {
   id         String   @id @default(cuid())
   storeId    String
@@ -24,4 +36,12 @@ model WaitlistEntry {
   name       String?
   phone      String?
   createdAt  DateTime @default(now())
+}
+
+model Store {
+  id          String   @id @default(cuid())
+  shop        String   @unique
+  accessToken String
+  ownerEmail  String?
+  createdAt   DateTime @default(now())
 }
