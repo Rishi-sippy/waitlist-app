@@ -1,7 +1,7 @@
 // src/app/api/auth/register/route.ts
 import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
-import { hashPassword, generateToken } from '@/lib/auth'
+import { hashPassword, generateToken } from '../../../../lib/auth'
+import { prisma } from '../../../../lib/db'
 
 type Body = {
   email: string
