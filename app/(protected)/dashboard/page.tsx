@@ -3,6 +3,7 @@
 import React from 'react'
 import { Activity, Settings, Bell, Plus, ChartLine } from 'lucide-react'
 import Sidebar from '../Sidebar'
+import ProfileMenu from './ProfileMenu'
 
 function StatCard({ title, value, delta, icon }: any) {
   return (
@@ -66,9 +67,13 @@ export default function DashboardPage() {
               <button className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#3CD5B0] text-black font-semibold hover:bg-[#30b796] transition">
                 <Plus size={16} /> Add product
               </button>
+
               <button className="p-3 rounded-lg bg-[#3CD5B0]/20 text-[#3CD5B0] hover:bg-[#3CD5B0]/30 transition">
                 <Bell size={18} />
               </button>
+
+              {/* Profile Dropdown */}
+              <ProfileMenu />
             </div>
           </header>
 
