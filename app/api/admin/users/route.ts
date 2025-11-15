@@ -10,20 +10,21 @@ export async function GET(req: Request) {
       .find((c) => c.startsWith('token='))
       ?.split('=')[1]
 
-    if (!token) {
-      return NextResponse.json({ user: null })
-    }
+    if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any
 
-    const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
-      select: { id: true, name: true, email: true, role: true, createdAt: true }
+    if (decoded.role !== 'superadmin') {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
+
+    const users = await prisma.user.findMany({
+      orderBy: { createdAt: 'desc' }
     })
 
-    return NextResponse.json({ user })
+    return NextResponse.json({ users })
   } catch (err) {
     console.error(err)
-    return NextResponse.json({ user: null })
+    return NextResponse.json({ error: 'Server Error' }, { status: 500 })
   }
 }

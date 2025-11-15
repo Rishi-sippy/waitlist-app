@@ -2,21 +2,39 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
 
-export function proxy(request: NextRequest) {
-  const token = request.cookies.get('token')?.value
+export function proxy(req: NextRequest) {
+  const token = req.cookies.get('token')?.value
+  const { pathname } = req.nextUrl
 
-  const isProtected = request.nextUrl.pathname.startsWith('/dashboard') || request.nextUrl.pathname.startsWith('/(protected)')
+  // Protected pages
+  const protectedRoutes = ['/dashboard', '/profile']
 
-  if (isProtected) {
-    if (!token) {
-      return NextResponse.redirect(new URL('/login', request.url))
-    }
+  // Superadmin-only pages
+  const adminRoutes = ['/admin', '/admin/users']
+
+  // If route is protected → user must be logged in
+  if (protectedRoutes.some((r) => pathname.startsWith(r))) {
+    if (!token) return NextResponse.redirect(new URL('/login', req.url))
 
     try {
       jwt.verify(token, process.env.JWT_SECRET!)
-      return NextResponse.next()
-    } catch (err) {
-      return NextResponse.redirect(new URL('/login', request.url))
+    } catch {
+      return NextResponse.redirect(new URL('/login', req.url))
+    }
+  }
+
+  // If route is admin-only
+  if (adminRoutes.some((r) => pathname.startsWith(r))) {
+    if (!token) return NextResponse.redirect(new URL('/login', req.url))
+
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any
+
+      if (decoded.role !== 'superadmin') {
+        return NextResponse.redirect(new URL('/dashboard', req.url))
+      }
+    } catch {
+      return NextResponse.redirect(new URL('/login', req.url))
     }
   }
 
@@ -24,5 +42,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/(protected)/:path*']
+  matcher: ['/dashboard/:path*', '/(protected)(.*)', '/admin/:path*']
 }
