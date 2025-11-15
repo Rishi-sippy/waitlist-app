@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Activity, Settings, Bell, Plus, ChartLine } from 'lucide-react'
 import Sidebar from '../Sidebar'
 import ProfileMenu from './ProfileMenu'
@@ -37,6 +37,17 @@ function Sparkline({ points = [10, 20, 8, 28, 16, 34, 24] }: any) {
 }
 
 export default function DashboardPage() {
+  const [user, setUser] = useState<any>(null)
+  useEffect(() => {
+    async function loadUser() {
+      const res = await fetch('/api/auth/me')
+      const data = await res.json()
+      setUser(data.user)
+    }
+    loadUser()
+  }, [])
+
+  const name = user?.name || 'User'
   const stats = [
     { title: 'Waitlist Signups', value: '1,284', delta: '+12% vs last week', icon: Activity },
     { title: 'Notifications Sent', value: '3,210', delta: '+2.3% vs last week', icon: Bell },
@@ -59,7 +70,7 @@ export default function DashboardPage() {
           {/* HEADER */}
           <header className="flex items-center justify-between gap-6">
             <div>
-              <h1 className="text-4xl font-extrabold text-[#3CD5B0]">Welcome back, Rishi 👋</h1>
+              <h1 className="text-4xl font-extrabold text-[#3CD5B0]">Welcome back, {name} 👋</h1>
               <p className="text-gray-400 mt-1">Here’s what's happening with your store today</p>
             </div>
 
@@ -71,7 +82,7 @@ export default function DashboardPage() {
               <button className="p-3 rounded-lg bg-[#3CD5B0]/20 text-[#3CD5B0] hover:bg-[#3CD5B0]/30 transition">
                 <Bell size={18} />
               </button>
-
+              <div></div>
               {/* Profile Dropdown */}
               <ProfileMenu />
             </div>
